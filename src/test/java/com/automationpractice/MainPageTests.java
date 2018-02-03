@@ -47,6 +47,60 @@ public class MainPageTests {
         Assertions.assertEquals("http://automationpractice.com/index.php", driver.getCurrentUrl());
     }
 
+    @Test
+    public void shouldDisplayTextCallUsNowAndPhoneNumberInContactUsSection() {
+        WebElement callUsElement = driver.findElement(By.cssSelector("#header > div.nav > div > div > nav > span"));
+        Assertions.assertEquals("Call us now: 0123-456-789", callUsElement.getText());
+    }
+
+    @Test
+    public void shouldDisplaySubpageContactUsWithTitle() {
+        WebElement contactUsLink = driver.findElement(By.id("contact-link"));
+        contactUsLink.click();
+        Assertions.assertEquals("http://automationpractice.com/index.php?controller=contact", driver.getCurrentUrl());
+        Assertions.assertEquals("Contact us - My Store", driver.getTitle());
+    }
+
+    @Test
+    public void shouldDisplaySubpageContactUs(){
+        WebElement contactUsLink = driver.findElement(By.linkText("Contact us"));
+        contactUsLink.click();
+        Assertions.assertEquals("http://automationpractice.com/index.php?controller=contact", driver.getCurrentUrl());
+    }
+
+    @Test
+    public void shouldDisplayTextContactUs(){
+        WebElement contactUsTest = driver.findElement(By.cssSelector("#contact-link > a"));
+        Assertions.assertEquals("Contact us", contactUsTest.getText());
+    }
+
+    @Test
+    public void shouldDisplaySubpageSignInWithTheTitle(){
+        WebElement signInLink = driver.findElement(By.cssSelector("#header > div.nav > div > div > nav > div.header_user_info > a"));
+        signInLink.click();
+        Assertions.assertEquals("http://automationpractice.com/index.php?controller=authentication&back=my-account", driver.getCurrentUrl());
+        Assertions.assertEquals("Login - My Store", driver.getTitle());
+    }
+
+    @Test
+    public void shouldDisplaySubpageSignIn(){
+        WebElement signInLink = driver.findElement(By.linkText("Sign in"));
+        signInLink.click();
+        Assertions.assertEquals("http://automationpractice.com/index.php?controller=authentication&back=my-account", driver.getCurrentUrl());
+    }
+
+    @Test
+    public void shouldDisplayTextSignIn(){
+        WebElement signInText = driver.findElement(By.cssSelector("#header > div.nav > div > div > nav > div.header_user_info > a"));
+        Assertions.assertEquals("Sign in", signInText.getText());
+    }
+
+    @Test
+    public void shouldDisplayLogoImage(){
+
+    }
+
+
     @AfterAll
     public void afterAll() {
         driver.close();
