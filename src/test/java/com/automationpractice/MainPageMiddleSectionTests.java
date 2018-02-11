@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Main Page Middle Section Tests")
 public class MainPageMiddleSectionTests {
@@ -143,38 +145,127 @@ public class MainPageMiddleSectionTests {
     }
 
     @Test
-    public void shouldDisplayTitleForSecondImageOnSlider() {
+    public void shouldDisplayTextForSecondImageOnSlider() throws InterruptedException {
+        WebElement nextSlideButton = driver.findElement(By.cssSelector("#homepage-slider > div > div.bx-controls.bx-has-controls-direction > div > a.bx-next"));
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement imageTwo = driver.findElement(By.cssSelector("#homeslider > li:nth-child(3) > a > img"));
+        wait.until(ExpectedConditions.visibilityOf(imageTwo));
+        Thread.sleep(1000);
+        nextSlideButton.click();
+        WebElement image = driver.findElement(By.cssSelector("#homeslider > li:nth-child(4) > a > img"));
+        Assertions.assertTrue(image.isDisplayed());
+        WebElement allDescription = driver.findElement(By.cssSelector("#homeslider > li:nth-child(4) > div"));
+        String text = "EXCEPTEUR\nOCCAECAT\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit\nSHOP NOW !";
+        Assertions.assertEquals(text, allDescription.getText());
 
     }
 
-    @Test
-    public void shouldDisplayDescriptionForSecondImageOnSlider() {
-
-    }
-
-    @Test
-    public void shouldDisplayButtonShopNowForSecondImageOnSlider() {
-
-    }
-
-    @Test
-    public void shouldDisplayTitleForThirdImageOnSlider() {
-
-    }
-
+/*  Different ways for the same solution for next test case
     @Test
     public void shouldDisplayDescriptionForThirdImageOnSlider() {
+        WebDriverWait wait = new WebDriverWait(driver, 13);
+        WebElement imageThree= driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > a > img"));
+        wait.until(ExpectedConditions.visibilityOf(imageThree));
+        Assertions.assertTrue(imageThree.isDisplayed());
+        WebElement allDescription = driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > div"));
+        String text = "EXCEPTEUR OCCAECAT Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit SHOP NOW !";
+        Assertions.assertEquals(text, allDescription.getText().replaceAll("\n", " "));
 
     }
 
     @Test
-    public void shouldDisplayButtonShopNowForThirdImageOnSlider() {
+    public void shouldDisplayTextForThirdImageOnSlider() throws InterruptedException {
+        WebElement previousSlideButton = driver.findElement(By.cssSelector("#homepage-slider > div > div.bx-controls.bx-has-controls-direction > div > a.bx-prev"));
 
+        WebDriverWait wait = new WebDriverWait(driver, 13);
+        WebElement imageTwo= driver.findElement(By.cssSelector("#homeslider > li:nth-child(3) > a > img"));
+        wait.until(ExpectedConditions.visibilityOf(imageTwo));
+        Assertions.assertTrue(imageTwo.isDisplayed());
+        Thread.sleep(1000);
+        previousSlideButton.click();
+        WebElement allDescription = driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > div"));
+        String text = "EXCEPTEUR OCCAECAT Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit SHOP NOW !";
+        Assertions.assertEquals(text, allDescription.getText().replaceAll("\n", " "));
+    }*/
+
+
+    @Test
+    public void shouldDisplayAllInformationForThirdImageOnSlider() {
+        WebElement allDescription = driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > div"));
+        String text = "EXCEPTEUR OCCAECAT Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit SHOP NOW !";
+        Assertions.assertEquals(text, allDescription.getText().replaceAll("\n", " "));
     }
 
     @Test
-    public void shouldDisplay2BannersElement() {
+    public void shouldRedirectAfterClickingOnShopNowButton() {
+        WebDriverWait waitFor = new WebDriverWait(driver, 10);
+        WebElement imageThree = driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > a > img"));
+        waitFor.until(ExpectedConditions.visibilityOf(imageThree));
+        WebElement button = driver.findElement(By.cssSelector("#homeslider > li:nth-child(2) > div > p:nth-child(3) > button"));
+        button.click();
+        String redirectedUrl = driver.getCurrentUrl();
+        boolean matches = redirectedUrl.matches("https://www.prestashop.com/.*");
+        Assertions.assertTrue(matches);
+    }
 
+    @Test
+    public void shouldRedirectAfterClickingTheButtonShopNowForSecondImage() throws InterruptedException {
+        String titleSubpage = "PrestaShop - Free ecommerce software";
+
+        WebDriverWait waitFor = new WebDriverWait(driver, 10);
+        WebElement imageThree = driver.findElement(By.cssSelector("#homeslider > li:nth-child(3) > a > img"));
+        waitFor.until(ExpectedConditions.visibilityOf(imageThree));
+        Thread.sleep(1000);
+        WebElement button = driver.findElement(By.cssSelector("#homeslider > li:nth-child(3) > div > p:nth-child(3) > button"));
+        button.click();
+        Assertions.assertEquals(titleSubpage, driver.getTitle(), "The title was not displayed");
+    }
+
+    @Test
+    public void shouldDisplayTwoBannersElement() {
+        List<WebElement> banners = driver.findElements(By.cssSelector("#htmlcontent_top > ul > li"));
+        Assertions.assertEquals(2, banners.size());
+    }
+
+    @Test
+    public void shouldDisplayCorrectImageOnBannerSection() {
+        String imageOne = "http://automationpractice.com/modules/themeconfigurator/img/banner-img6.jpg";
+        String imageTwo = "http://automationpractice.com/modules/themeconfigurator/img/banner-img7.jpg";
+
+        List<WebElement> bannersList = driver.findElements(By.cssSelector("#htmlcontent_top > ul > li"));
+        WebElement elementOne = bannersList.get(0).findElement(By.cssSelector("img"));
+        Assertions.assertEquals(imageOne, elementOne.getAttribute("src"));
+        WebElement elementTwo = bannersList.get(1).findElement(By.cssSelector("img"));
+        Assertions.assertEquals(imageTwo, elementTwo.getAttribute("src"));
+    }
+
+    @Test
+    public void shouldDisplayCorrectUrlForBanners() {
+        String linkOne = "http://www.prestashop.com/";
+        String linkTwo = "http://www.prestashop.com/";
+
+        List<WebElement> bannersList = driver.findElements(By.cssSelector("#htmlcontent_top > ul > li > a"));
+        Assertions.assertEquals(linkOne, bannersList.get(0).getAttribute("href"));
+        Assertions.assertEquals(linkTwo, bannersList.get(1).getAttribute("href"));
+    }
+
+    @Test
+    public void shouldDisplaySubpageAfterClickingOnBannerNoOne() {
+        List<WebElement> banner = driver.findElements(By.cssSelector("#htmlcontent_top > ul > li"));
+        banner.get(0).click();
+        String redirectedUrl = driver.getCurrentUrl();
+        boolean matches = redirectedUrl.matches("https://www.prestashop.com/.*");
+        Assertions.assertTrue(matches);
+    }
+
+    @Test
+    public void shouldDisplaySubpageAfterClickingOnBannerNoTwo() {
+        String titleSubpage = "PrestaShop - Free ecommerce software";
+
+        List<WebElement> banner = driver.findElements(By.cssSelector("#htmlcontent_top > ul > li"));
+        banner.get(1).click();
+        Assertions.assertEquals(titleSubpage, driver.getTitle());
     }
 
     @AfterAll
