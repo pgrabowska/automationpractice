@@ -1,8 +1,8 @@
 package com.automationpractice;
 
-
 import com.automationpractice.pageobjects.MainPage;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -55,23 +55,39 @@ public class MainPageFeatureSectionTests {
     @Test
     public void shouldDisplayImageForEachItem() {
         mainPage.getPopularLink().click();
-        List<WebElement> popularImages = mainPage.getPopularImages();
+        List<WebElement> popularImages = mainPage.getPopularOffers();
         Assertions.assertEquals(7, popularImages.size());
     }
 
     @Test
-    public void shouldDisplayTitleForFirsItemOnPopularSection() {
+    public void shouldDisplayFirstImageOnPopularSection() {
         mainPage.getPopularLink().click();
-        String title = "Faded Short Sleeve T-shirts";
-        Assertions.assertEquals(title, mainPage.getTitleForTheFirstImageOnPopularSection().getText(), "The title of image is incorrect");
+        String defaultLink = "http://automationpractice.com/img/p/1/1-home_default.jpg";
+        String src = mainPage.getPopularImage().get(0).getAttribute("src");
+        //Assertions.assertTrue(src.equals("http://automationpractice.com/img/p/1/1-home_default.jpg"));
+        Assertions.assertEquals("http://automationpractice.com/img/p/1/1-home_default.jpg", src, "Image is not ...");
+        Assertions.assertEquals(defaultLink, mainPage.getPopularOffers().get(0).findElement(By.className("replace-2x")).getAttribute("src"));
     }
 
     @Test
-    public void shouldDisplayPriceForFirsItemOnPopularSection() {
+    public void shouldDisplayTitleForFirstItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        Assertions.assertEquals("Faded Short Sleeve T-shirts", mainPage.getTitleForTheFirstImageOnPopularSection().getText(), "The title of image is incorrect");
+    }
+
+    @Test
+    public void shouldDisplayPriceForFirstItemOnPopularSection() {
         mainPage.getPopularLink().click();
         Assertions.assertTrue(mainPage.getPriceForTheFirstItemOnPopularSection().isDisplayed());
-        String price = "$16.51";
-        Assertions.assertEquals(price, mainPage.getPriceForTheFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("$16.51", mainPage.getPriceForTheFirstItemOnPopularSection().getText());
+    }
+
+    // second possibility for checking price
+    @Test
+    public void shouldDisplayPrice() {
+        mainPage.getPopularLink().click();
+        String price = mainPage.getPriceForItemsOnPopularSection().get(0).findElement(By.className("price")).getText();
+        Assertions.assertEquals("$16.51", price);
     }
 
     @Test
@@ -85,12 +101,11 @@ public class MainPageFeatureSectionTests {
     }
 
     @Test
-    public void shouldDisplayAddToCartForFirsItemOnPopularSectionWhenMouseOver() throws InterruptedException {
+    public void shouldDisplayAddToCartForFirstItemOnPopularSectionWhenMouseOver() {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverFirstPopularElement();
         Assertions.assertTrue(mainPage.getButtonAddToCartFromFirstItemOnPopularSection().isDisplayed());
-        String buttonAddToCart = "Add to cart";
-        Assertions.assertEquals(buttonAddToCart, mainPage.getButtonAddToCartFromFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartFromFirstItemOnPopularSection().getText());
     }
 
     @Test
@@ -98,63 +113,148 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverFirstPopularElement();
         Assertions.assertTrue(mainPage.getButtonMoreForFirstItemOnPopularSection().isDisplayed());
-        String buttonMore = "More";
-        Assertions.assertEquals(buttonMore, mainPage.getButtonMoreForFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("More", mainPage.getButtonMoreForFirstItemOnPopularSection().getText());
     }
 
     @Test
     public void shouldDisplayPriceForFirstItemOnPopularSectionWhenMouseOver() {
-
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverFirstPopularElement();
+        Assertions.assertTrue(mainPage.getPriceFromFirstItemWhenMouseOver().isDisplayed());
+        Assertions.assertEquals("$16.51", mainPage.getPriceFromFirstItemWhenMouseOver().getText());
     }
 
     @Test
-    public void shouldDisplayPopupAfterClickingOnFirstItemOnPopularSection() {
-
+    public void shouldDisplayTitleForSecondItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        String defaultLink = "http://automationpractice.com/img/p/7/7-home_default.jpg";
+        Assertions.assertEquals(defaultLink, mainPage.getPopularOffers().get(1).findElement(By.className("replace-2x")).getAttribute("src"));
     }
 
     @Test
-    public void shouldDisplayMainImageOnViewSection() {
-
+    public void shouldDisplayPriceForSecondItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        String price = mainPage.getPriceForItemsOnPopularSection().get(1).findElement(By.className("price")).getText();
+        Assertions.assertEquals("$27.00", price);
     }
 
     @Test
-    public void shouldDisplayBoxOfImagesOnViewSection() {
-
+    public void shouldDisplayQuickViewOnSecondPopularItemWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverSecondPopularElement();
+        Assertions.assertEquals(1, mainPage.getQuickViewLinks().size());
+        Assertions.assertTrue(mainPage.getQuickViewLinkOnSecondPopularItem().isDisplayed());
+        Assertions.assertEquals("Quick view", mainPage.getQuickViewLinkOnSecondPopularItem().getText());
     }
 
     @Test
-    public void shouldDisplayOtherViewAfterClickingArrowLeftOnViewSection() {
-
+    public void shouldDisplayAddToCartForSecondItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverSecondPopularElement();
+        Assertions.assertTrue(mainPage.getButtonAddToCartOnSecondPopularItem().isDisplayed());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartOnSecondPopularItem().getText());
     }
 
     @Test
-    public void shouldDisplayNameForItemOnViewSection() {
-
+    public void shouldDisplayMoreForSecondItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverSecondPopularElement();
+        Assertions.assertTrue(mainPage.getButtonMoreForSecondItemOnPopularSection().isDisplayed(), "Button 'More' is not displayed");
+        Assertions.assertEquals("More", mainPage.getButtonMoreForSecondItemOnPopularSection().getText());
     }
 
     @Test
-    public void shouldDisplayReferenceForItemOnViewSection() {
-
+    public void shouldDisplayPriceForSecondItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        String price = mainPage.getPriceForItemsOnPopularSection().get(1).findElement(By.className("price")).getText();
+        Assertions.assertEquals("$27.00", price);
     }
 
     @Test
-    public void shouldDisplayConditionLabelOnItemViewSection() {
-
+    public void shouldDisplayTitleForLastItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        Assertions.assertEquals("Printed Chiffon Dress", mainPage.getTitleForTheLastImageOnPopularSection().getText(), "The title of image is incorrect");
     }
 
     @Test
-    public void shouldDisplayStatusOfConditionOnItemViewSection() {
-
+    public void shouldDisplayPriceForLastItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("price")).getText();
+        Assertions.assertEquals("$16.40", newPrice);
     }
 
     @Test
-    public void shouldDisplayDescriptionOnItemViewSection() {
-
+    public void shouldDisplayOldPriceForLastItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("old-price")).getText();
+        Assertions.assertEquals("$20.50", newPrice);
     }
 
     @Test
-    public void shouldDisplayFourButtonsSocialMediaOnItemView() {
+    public void shouldDisplayPercentReductionPriceForLastItemOnPopularSection() {
+        mainPage.getPopularLink().click();
+        String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("price-percent-reduction")).getText();
+        Assertions.assertEquals("-20%", newPrice);
+    }
 
+    @Test
+    public void shouldDisplayQuickViewOnLastPopularItemWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverLastPopularElement();
+        Assertions.assertEquals(1, mainPage.getQuickViewLinks().size());
+        Assertions.assertTrue(mainPage.getQuickViewLinkOnLastPopularItem().isDisplayed());
+        Assertions.assertEquals("Quick view", mainPage.getQuickViewLinkOnLastPopularItem().getText());
+    }
+
+    @Test
+    public void shouldDisplayAddToCartForLastItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverLastPopularElement();
+        Assertions.assertTrue(mainPage.getButtonAddToCartOnLastPopularItem().isDisplayed());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartOnLastPopularItem().getText());
+    }
+
+    @Test
+    public void shouldDisplayMoreForLastItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverLastPopularElement();
+        Assertions.assertTrue(mainPage.getButtonMoreForLastItemOnPopularSection().isDisplayed(), "Button 'More' is not displayed");
+        Assertions.assertEquals("More", mainPage.getButtonMoreForLastItemOnPopularSection().getText());
+    }
+
+    @Test
+    public void shouldDisplayPriceForLastItemOnPopularSectionWhenMouseOver() {
+        mainPage.getPopularLink().click();
+        mainPage.hoverMouseOverLastPopularElement();
+        String price = mainPage.getPriceForLastItemWhenMouseOver().getText();
+        Assertions.assertEquals("$16.40 $20.50 -20%", price);
+    }
+
+    @Test
+    public void shouldDisplayBestSellersSectionAsActiveAfterClickingOnLink() {
+        mainPage.getBestSellersLink().click();
+        Assertions.assertTrue(mainPage.isBestSellersLinkActive());
+    }
+
+    @Test
+    public void shouldDisplayBestSellersSection() {
+        WebElement bestSellersLink = mainPage.getBestSellersLink();
+        Assertions.assertTrue(bestSellersLink.isDisplayed());
+        Assertions.assertEquals("BEST SELLERS", bestSellersLink.getText());
+    }
+
+    @Test
+    public void shouldDisplaySevenItemsOnBestSellersSection() {
+        mainPage.getBestSellersLink().click();
+        List<WebElement> bestSellersOffers = mainPage.getBestSellersOffers();
+        Assertions.assertEquals(7, bestSellersOffers.size());
+    }
+
+    @Test
+    public void shouldDisplayImageForEachItemOnBestSellersSection() {
+        mainPage.getBestSellersLink().click();
+        List<WebElement> bestSellersImages = mainPage.getBestSellersOffers();
+        Assertions.assertEquals(7, bestSellersImages.size());
     }
 
     @AfterAll
