@@ -41,7 +41,7 @@ public class MainPage {
         return driver.findElements(By.cssSelector("#homefeatured > li"));
     }
 
-    public List<WebElement> getPopularImage() {
+    public List<WebElement> getPopularImages() {
         return driver.findElements(By.cssSelector("#homefeatured > li.first-item-of-mobile-line > div > div.left-block > div > a > img"));
     }
 

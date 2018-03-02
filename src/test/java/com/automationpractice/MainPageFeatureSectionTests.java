@@ -72,16 +72,14 @@ public class MainPageFeatureSectionTests {
     @Test
     public void shouldDisplayTitleForFirstItemOnPopularSection() {
         mainPage.getPopularLink().click();
-        String title = "Faded Short Sleeve T-shirts";
-        Assertions.assertEquals(title, mainPage.getTitleForTheFirstImageOnPopularSection().getText(), "The title of image is incorrect");
+        Assertions.assertEquals("Faded Short Sleeve T-shirts", mainPage.getTitleForTheFirstImageOnPopularSection().getText(), "The title of image is incorrect");
     }
 
     @Test
     public void shouldDisplayPriceForFirstItemOnPopularSection() {
         mainPage.getPopularLink().click();
         Assertions.assertTrue(mainPage.getPriceForTheFirstItemOnPopularSection().isDisplayed());
-        String price = "$16.51";
-        Assertions.assertEquals(price, mainPage.getPriceForTheFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("$16.51", mainPage.getPriceForTheFirstItemOnPopularSection().getText());
     }
 
     // second possibility for checking price
@@ -107,8 +105,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverFirstPopularElement();
         Assertions.assertTrue(mainPage.getButtonAddToCartFromFirstItemOnPopularSection().isDisplayed());
-        String buttonAddToCart = "Add to cart";
-        Assertions.assertEquals(buttonAddToCart, mainPage.getButtonAddToCartFromFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartFromFirstItemOnPopularSection().getText());
     }
 
     @Test
@@ -116,8 +113,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverFirstPopularElement();
         Assertions.assertTrue(mainPage.getButtonMoreForFirstItemOnPopularSection().isDisplayed());
-        String buttonMore = "More";
-        Assertions.assertEquals(buttonMore, mainPage.getButtonMoreForFirstItemOnPopularSection().getText());
+        Assertions.assertEquals("More", mainPage.getButtonMoreForFirstItemOnPopularSection().getText());
     }
 
     @Test
@@ -125,8 +121,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverFirstPopularElement();
         Assertions.assertTrue(mainPage.getPriceFromFirstItemWhenMouseOver().isDisplayed());
-        String prize = "$16.51";
-        Assertions.assertEquals(prize, mainPage.getPriceFromFirstItemWhenMouseOver().getText());
+        Assertions.assertEquals("$16.51", mainPage.getPriceFromFirstItemWhenMouseOver().getText());
     }
 
     @Test
@@ -157,8 +152,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverSecondPopularElement();
         Assertions.assertTrue(mainPage.getButtonAddToCartOnSecondPopularItem().isDisplayed());
-        String buttonAddToCart = "Add to cart";
-        Assertions.assertEquals(buttonAddToCart, mainPage.getButtonAddToCartOnSecondPopularItem().getText());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartOnSecondPopularItem().getText());
     }
 
     @Test
@@ -166,8 +160,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverSecondPopularElement();
         Assertions.assertTrue(mainPage.getButtonMoreForSecondItemOnPopularSection().isDisplayed(), "Button 'More' is not displayed");
-        String buttonMore = "More";
-        Assertions.assertEquals(buttonMore, mainPage.getButtonMoreForSecondItemOnPopularSection().getText());
+        Assertions.assertEquals("More", mainPage.getButtonMoreForSecondItemOnPopularSection().getText());
     }
 
     @Test
@@ -180,32 +173,28 @@ public class MainPageFeatureSectionTests {
     @Test
     public void shouldDisplayTitleForLastItemOnPopularSection() {
         mainPage.getPopularLink().click();
-        String title = "Printed Chiffon Dress";
-        Assertions.assertEquals(title, mainPage.getTitleForTheLastImageOnPopularSection().getText(), "The title of image is incorrect");
+        Assertions.assertEquals("Printed Chiffon Dress", mainPage.getTitleForTheLastImageOnPopularSection().getText(), "The title of image is incorrect");
     }
 
     @Test
     public void shouldDisplayPriceForLastItemOnPopularSection() {
         mainPage.getPopularLink().click();
         String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("price")).getText();
-        String price = "$16.40";
-        Assertions.assertEquals(price, newPrice);
+        Assertions.assertEquals("$16.40", newPrice);
     }
 
     @Test
     public void shouldDisplayOldPriceForLastItemOnPopularSection() {
         mainPage.getPopularLink().click();
         String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("old-price")).getText();
-        String price = "$20.50";
-        Assertions.assertEquals(price, newPrice);
+        Assertions.assertEquals("$20.50", newPrice);
     }
 
     @Test
     public void shouldDisplayPercentReductionPriceForLastItemOnPopularSection() {
         mainPage.getPopularLink().click();
         String newPrice = mainPage.getPriceForTheLastItemOnPopularSection().findElement(By.className("price-percent-reduction")).getText();
-        String price = "-20%";
-        Assertions.assertEquals(price, newPrice);
+        Assertions.assertEquals("-20%", newPrice);
     }
 
     @Test
@@ -222,8 +211,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverLastPopularElement();
         Assertions.assertTrue(mainPage.getButtonAddToCartOnLastPopularItem().isDisplayed());
-        String buttonAddToCart = "Add to cart";
-        Assertions.assertEquals(buttonAddToCart, mainPage.getButtonAddToCartOnLastPopularItem().getText());
+        Assertions.assertEquals("Add to cart", mainPage.getButtonAddToCartOnLastPopularItem().getText());
     }
 
     @Test
@@ -231,8 +219,7 @@ public class MainPageFeatureSectionTests {
         mainPage.getPopularLink().click();
         mainPage.hoverMouseOverLastPopularElement();
         Assertions.assertTrue(mainPage.getButtonMoreForLastItemOnPopularSection().isDisplayed(), "Button 'More' is not displayed");
-        String buttonMore = "More";
-        Assertions.assertEquals(buttonMore, mainPage.getButtonMoreForLastItemOnPopularSection().getText());
+        Assertions.assertEquals("More", mainPage.getButtonMoreForLastItemOnPopularSection().getText());
     }
 
     @Test
