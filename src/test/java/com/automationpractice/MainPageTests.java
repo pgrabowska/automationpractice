@@ -147,7 +147,6 @@ public class MainPageTests {
         String shoppingCartLink = "http://automationpractice.com/index.php?controller=order";
         WebElement shoppingCartHref = driver.findElement(By.cssSelector("#header > div:nth-child(3) > div > div > div:nth-child(3) > div > a"));
         Assertions.assertEquals(shoppingCartLink, shoppingCartHref.getAttribute("href"), "Shopping card section is not displayed correctly");
-
     }
 
     @Test
